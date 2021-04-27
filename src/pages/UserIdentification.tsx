@@ -38,12 +38,20 @@ export function UserIdentification(){
 
 
     async function handleSubmit(){
-        if(!name)
-            return Alert.alert('Informe seu nome.');
-        
-        await AsyncStorage.setItem('@plantmanager:user', name);
-
-        navigation.navigate('Confirmation');
+        if(!name) return Alert.alert('Informe seu nome.');
+            
+        try{
+            await AsyncStorage.setItem('@plantmanager:user', name);
+            navigation.navigate('Confirmation', {
+                title: 'Prontinho',
+                subtitle: ' Agora vamos cuidar das suas plantinhas com a dedicação que elas merecem!',
+                buttonTitle: 'Começar',
+                icon: 'smile',
+                nextScreen: 'PlantSelect'
+            });
+        } catch{
+            Alert.alert('Não foi possível salvar seu nome.');
+        }
     }
 
     return (
